@@ -23,7 +23,7 @@ func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelli
 			BoundedTaxBand{LowerLimit: 145000, UpperLimit: 250000, Rate: 0.02},
 			BoundedTaxBand{LowerLimit: 250000, UpperLimit: 325000, Rate: 0.05},
 			BoundedTaxBand{LowerLimit: 325000, UpperLimit: 750000, Rate: 0.10},
-			UnboundedTaxBand{LowerLimit: 750000, Rate: 0.12},
+			UnboundedTaxBand{LowerLimit: 750001, Rate: 0.12},
 		}
 	}
 

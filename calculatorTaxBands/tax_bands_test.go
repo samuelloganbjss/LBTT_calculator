@@ -72,3 +72,47 @@ func TestFactoryCreatesStandardWithADSTaxBands(t *testing.T) {
 		t.Errorf("Expected 5 tax bands for standard buyer with ADS, got %d", len(taxBands))
 	}
 }
+
+func TestFullTaxCalculationForStandardBuyer(t *testing.T) {
+	factory := TaxBandFactory{}
+	price := 300000.00
+	isFirstTimeBuyer := false
+	isAdditionalDwelling := false
+
+	taxBands, err := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling)
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+
+	totalTax := 0.0
+	for _, band := range taxBands {
+		totalTax += band.CalculateTax(price)
+	}
+
+	expectedTax := 4600.00
+	if totalTax != expectedTax {
+		t.Errorf("Expected total tax %f but got %f", expectedTax, totalTax)
+	}
+}
+
+func TestFullTaxCalculationForFirstTimeBuyer(t *testing.T) {
+	factory := TaxBandFactory{}
+	price := 300000.00
+	isFirstTimeBuyer := true
+	isAdditionalDwelling := false
+
+	taxBands, err := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling)
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+
+	totalTax := 0.0
+	for _, band := range taxBands {
+		totalTax += band.CalculateTax(price)
+	}
+
+	expectedTax := 4000.00
+	if totalTax != expectedTax {
+		t.Errorf("Expected total tax %f but got %f", expectedTax, totalTax)
+	}
+}
