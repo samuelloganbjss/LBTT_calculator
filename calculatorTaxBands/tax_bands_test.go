@@ -40,28 +40,28 @@ func TestFixedTaxBand(t *testing.T) {
 
 func TestFactoryHandlesFirstTimeBuyerAndAdditionalDwellingConflict(t *testing.T) {
 	factory := TaxBandFactory{}
-	err := factory.CreateCalculator(true, true, 500000)
+	err := factory.CreateTaxBands(true, true, 500000)
 
 	if err != nil {
 		t.Errorf("Expected an error for first-time buyer and additional dwelling, but got nil")
 	}
 }
 
-func TestFactoryCreatesFirstTimeBuyerCalculator(t *testing.T) {
+func TestFactoryCreatesFirstTimeBuyerTaxBands(t *testing.T) {
 	factory := TaxBandFactory{}
-	calculator := factory.CreateCalculator(true, false, 500000)
+	taxBands := factory.CreateTaxBands(true, false, 500000)
 
-	if len(calculator.TaxBands) != 4 {
-		t.Errorf("Expected 4 tax bands for first-time buyer, got %d", len(calculator.TaxBands))
+	if len(taxBands) != 4 {
+		t.Errorf("Expected 4 tax bands for first-time buyer, got %d", len(taxBands))
 	}
 }
 
-func TestFactoryCreatesStandardWithADSCalculator(t *testing.T) {
+func TestFactoryCreatesStandardWithADSTaxBands(t *testing.T) {
 	factory := TaxBandFactory{}
-	calculator := factory.CreateCalculator(false, true, 500000)
+	taxBands := factory.CreateTaxBands(false, true, 500000)
 
-	if len(calculator.TaxBands) != 5 {
-		t.Errorf("Expected 5 tax bands for standard buyer with ADS, got %d", len(calculator.TaxBands))
+	if len(taxBands) != 5 {
+		t.Errorf("Expected 5 tax bands for standard buyer with ADS, got %d", len(taxBands))
 	}
 }
 
@@ -70,8 +70,8 @@ func TestFullTaxCalculationForStandardBuyer(t *testing.T) {
 	price := 300000.00
 	isFirstTimeBuyer := false
 	isAdditionalDwelling := false
-
-	calculator := factory.CreateCalculator(isFirstTimeBuyer, isAdditionalDwelling, price)
+	taxBands := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling, price)
+	calculator := NewCalculator(taxBands)
 
 	totalTax := calculator.Calculate(price)
 
@@ -86,7 +86,8 @@ func TestFullTaxCalculationForFirstTimeBuyer(t *testing.T) {
 	price := 300000.00
 	isFirstTimeBuyer := true
 	isAdditionalDwelling := false
-	calculator := factory.CreateCalculator(isFirstTimeBuyer, isAdditionalDwelling, price)
+	taxBands := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling, price)
+	calculator := NewCalculator(taxBands)
 
 	totalTax := calculator.Calculate(price)
 
@@ -101,7 +102,8 @@ func TestFullTaxCalculationForAdditionalDwellingSupplement(t *testing.T) {
 	price := 500000.00
 	isFirstTimeBuyer := false
 	isAdditionalDwelling := true
-	calculator := factory.CreateCalculator(isFirstTimeBuyer, isAdditionalDwelling, price)
+	taxBands := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling, price)
+	calculator := NewCalculator(taxBands)
 
 	totalTax := calculator.Calculate(price)
 

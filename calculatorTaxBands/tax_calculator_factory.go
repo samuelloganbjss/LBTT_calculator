@@ -2,7 +2,7 @@ package calculator
 
 type TaxBandFactory struct{}
 
-func (f TaxBandFactory) CreateCalculator(isFirstTimeBuyer bool, isAdditionalDwelling bool, price float64) *Calculator {
+func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelling bool, price float64) []TaxBand {
 	if isFirstTimeBuyer && isAdditionalDwelling {
 		return nil
 	}
@@ -30,5 +30,5 @@ func (f TaxBandFactory) CreateCalculator(isFirstTimeBuyer bool, isAdditionalDwel
 		taxBands = append(taxBands, adsTax)
 	}
 
-	return &Calculator{TaxBands: taxBands}
+	return taxBands
 }
