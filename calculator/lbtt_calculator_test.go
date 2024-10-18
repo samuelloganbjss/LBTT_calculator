@@ -2,36 +2,36 @@ package calculator
 
 import "testing"
 
-func TestCalculateLBTT_WithAdditionalDwellingSupplement(t *testing.T) {
-	price := 300000.00
-	expected := 4600.00 + 18000.00
+func TestBoundedTaxBand(t *testing.T) {
+	band := BoundedTaxBand{LowerLimit: 145000, UpperLimit: 250000, Rate: 0.02}
 
-	calculator := NewLBTTCalculator(StandardTaxCalculator{}, AdditionalDwellingCalculator{}, true)
-	result := calculator.Calculate(price)
-
-	if result != expected {
-		t.Errorf("Expected %f but got %f", expected, result)
-	}
-}
-
-func TestCalculateLBTT_WithoutAdditionalDwellingSupplement(t *testing.T) {
-	price := 300000.00
-	expected := 4600.00
-
-	calculator := NewLBTTCalculator(StandardTaxCalculator{}, AdditionalDwellingCalculator{}, false)
-	result := calculator.Calculate(price)
-
-	if result != expected {
-		t.Errorf("Expected %f but got %f", expected, result)
-	}
-}
-
-func TestCalculateLBTT_WithFirstTimeBuyer(t *testing.T) {
 	price := 200000.00
-	expected := 500.00
+	expected := (200000 - 145000) * 0.02
+	result := band.CalculateTax(price)
 
-	calculator := NewLBTTCalculator(FirstTimeBuyerTaxCalculator{}, AdditionalDwellingCalculator{}, false)
-	result := calculator.Calculate(price)
+	if result != expected {
+		t.Errorf("Expected %f but got %f", expected, result)
+	}
+}
+
+func TestUnboundedTaxBand(t *testing.T) {
+	band := UnboundedTaxBand{LowerLimit: 750000, Rate: 0.12}
+
+	price := 1000000.00
+	expected := (1000000 - 750000) * 0.12
+	result := band.CalculateTax(price)
+
+	if result != expected {
+		t.Errorf("Expected %f but got %f", expected, result)
+	}
+}
+
+func TestFixedTaxBand(t *testing.T) {
+	band := FixedTaxBand{FixedAmount: 500.00}
+
+	price := 1000000.00
+	expected := 500.00
+	result := band.CalculateTax(price)
 
 	if result != expected {
 		t.Errorf("Expected %f but got %f", expected, result)

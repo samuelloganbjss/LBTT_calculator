@@ -1,5 +1,5 @@
 package calculator
 
-type TaxCalculator interface {
+type TaxBand interface {
 	CalculateTax(price float64) float64
 }
