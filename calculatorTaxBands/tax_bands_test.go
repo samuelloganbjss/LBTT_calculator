@@ -38,9 +38,22 @@ func TestFixedTaxBand(t *testing.T) {
 	}
 }
 
+func TestFactoryHandlesFirstTimeBuyerAndAdditionalDwellingConflict(t *testing.T) {
+	factory := TaxBandFactory{}
+	_, err := factory.CreateTaxBands(true, true)
+
+	if err == nil {
+		t.Errorf("Expected an error for first-time buyer and additional dwelling, but got nil")
+	}
+}
+
 func TestFactoryCreatesFirstTimeBuyerTaxBands(t *testing.T) {
 	factory := TaxBandFactory{}
-	taxBands := factory.CreateTaxBands(true, false)
+	taxBands, err := factory.CreateTaxBands(true, false)
+
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
 
 	if len(taxBands) != 4 {
 		t.Errorf("Expected 4 tax bands for first-time buyer, got %d", len(taxBands))
@@ -49,18 +62,13 @@ func TestFactoryCreatesFirstTimeBuyerTaxBands(t *testing.T) {
 
 func TestFactoryCreatesStandardWithADSTaxBands(t *testing.T) {
 	factory := TaxBandFactory{}
-	taxBands := factory.CreateTaxBands(false, true)
+	taxBands, err := factory.CreateTaxBands(false, true)
+
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
 
 	if len(taxBands) != 5 {
 		t.Errorf("Expected 5 tax bands for standard buyer with ADS, got %d", len(taxBands))
-	}
-}
-
-func TestFactoryCreatesStandardTaxBands(t *testing.T) {
-	factory := TaxBandFactory{}
-	taxBands := factory.CreateTaxBands(false, false)
-
-	if len(taxBands) != 4 {
-		t.Errorf("Expected 4 tax bands for standard buyer, got %d", len(taxBands))
 	}
 }

@@ -1,8 +1,14 @@
 package calculator
 
+import "errors"
+
 type TaxBandFactory struct{}
 
-func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelling bool) []TaxBand {
+func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelling bool) ([]TaxBand, error) {
+	if isFirstTimeBuyer && isAdditionalDwelling {
+		return nil, errors.New("a first-time buyer cannot have an additional dwelling")
+	}
+
 	var taxBands []TaxBand
 
 	if isFirstTimeBuyer {
@@ -26,5 +32,5 @@ func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelli
 		taxBands = append(taxBands, adsTax)
 	}
 
-	return taxBands
+	return taxBands, nil
 }
