@@ -37,3 +37,30 @@ func TestFixedTaxBand(t *testing.T) {
 		t.Errorf("Expected %f but got %f", expected, result)
 	}
 }
+
+func TestFactoryCreatesFirstTimeBuyerTaxBands(t *testing.T) {
+	factory := TaxBandFactory{}
+	taxBands := factory.CreateTaxBands(true, false)
+
+	if len(taxBands) != 4 {
+		t.Errorf("Expected 4 tax bands for first-time buyer, got %d", len(taxBands))
+	}
+}
+
+func TestFactoryCreatesStandardWithADSTaxBands(t *testing.T) {
+	factory := TaxBandFactory{}
+	taxBands := factory.CreateTaxBands(false, true)
+
+	if len(taxBands) != 5 {
+		t.Errorf("Expected 5 tax bands for standard buyer with ADS, got %d", len(taxBands))
+	}
+}
+
+func TestFactoryCreatesStandardTaxBands(t *testing.T) {
+	factory := TaxBandFactory{}
+	taxBands := factory.CreateTaxBands(false, false)
+
+	if len(taxBands) != 4 {
+		t.Errorf("Expected 4 tax bands for standard buyer, got %d", len(taxBands))
+	}
+}
