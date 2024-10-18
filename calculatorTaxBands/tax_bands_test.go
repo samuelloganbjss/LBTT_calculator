@@ -40,36 +40,28 @@ func TestFixedTaxBand(t *testing.T) {
 
 func TestFactoryHandlesFirstTimeBuyerAndAdditionalDwellingConflict(t *testing.T) {
 	factory := TaxBandFactory{}
-	_, err := factory.CreateTaxBands(true, true, 500000)
+	err := factory.CreateCalculator(true, true, 500000)
 
-	if err == nil {
+	if err != nil {
 		t.Errorf("Expected an error for first-time buyer and additional dwelling, but got nil")
 	}
 }
 
-func TestFactoryCreatesFirstTimeBuyerTaxBands(t *testing.T) {
+func TestFactoryCreatesFirstTimeBuyerCalculator(t *testing.T) {
 	factory := TaxBandFactory{}
-	taxBands, err := factory.CreateTaxBands(true, false, 500000)
+	calculator := factory.CreateCalculator(true, false, 500000)
 
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
-
-	if len(taxBands) != 4 {
-		t.Errorf("Expected 4 tax bands for first-time buyer, got %d", len(taxBands))
+	if len(calculator.TaxBands) != 4 {
+		t.Errorf("Expected 4 tax bands for first-time buyer, got %d", len(calculator.TaxBands))
 	}
 }
 
-func TestFactoryCreatesStandardWithADSTaxBands(t *testing.T) {
+func TestFactoryCreatesStandardWithADSCalculator(t *testing.T) {
 	factory := TaxBandFactory{}
-	taxBands, err := factory.CreateTaxBands(false, true, 500000)
+	calculator := factory.CreateCalculator(false, true, 500000)
 
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
-
-	if len(taxBands) != 5 {
-		t.Errorf("Expected 5 tax bands for standard buyer with ADS, got %d", len(taxBands))
+	if len(calculator.TaxBands) != 5 {
+		t.Errorf("Expected 5 tax bands for standard buyer with ADS, got %d", len(calculator.TaxBands))
 	}
 }
 
@@ -79,15 +71,9 @@ func TestFullTaxCalculationForStandardBuyer(t *testing.T) {
 	isFirstTimeBuyer := false
 	isAdditionalDwelling := false
 
-	taxBands, err := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling, price)
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
+	calculator := factory.CreateCalculator(isFirstTimeBuyer, isAdditionalDwelling, price)
 
-	totalTax := 0.0
-	for _, band := range taxBands {
-		totalTax += band.CalculateTax(price)
-	}
+	totalTax := calculator.Calculate(price)
 
 	expectedTax := 4600.00
 	if totalTax != expectedTax {
@@ -100,16 +86,9 @@ func TestFullTaxCalculationForFirstTimeBuyer(t *testing.T) {
 	price := 300000.00
 	isFirstTimeBuyer := true
 	isAdditionalDwelling := false
+	calculator := factory.CreateCalculator(isFirstTimeBuyer, isAdditionalDwelling, price)
 
-	taxBands, err := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling, price)
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
-
-	totalTax := 0.0
-	for _, band := range taxBands {
-		totalTax += band.CalculateTax(price)
-	}
+	totalTax := calculator.Calculate(price)
 
 	expectedTax := 4000.00
 	if totalTax != expectedTax {
@@ -122,16 +101,9 @@ func TestFullTaxCalculationForAdditionalDwellingSupplement(t *testing.T) {
 	price := 500000.00
 	isFirstTimeBuyer := false
 	isAdditionalDwelling := true
+	calculator := factory.CreateCalculator(isFirstTimeBuyer, isAdditionalDwelling, price)
 
-	taxBands, err := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling, price)
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
-
-	totalTax := 0.0
-	for _, band := range taxBands {
-		totalTax += band.CalculateTax(price)
-	}
+	totalTax := calculator.Calculate(price)
 
 	expectedTax := 53350.0
 	if totalTax != expectedTax {
