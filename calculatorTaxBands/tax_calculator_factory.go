@@ -4,9 +4,9 @@ import "errors"
 
 type TaxBandFactory struct{}
 
-func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelling bool) ([]TaxBand, error) {
+func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelling bool, price float64) ([]TaxBand, error) {
 	if isFirstTimeBuyer && isAdditionalDwelling {
-		return nil, errors.New("a first-time buyer cannot have an additional dwelling")
+		return nil, errors.New("a first-time buyer cannot have an additional dwelling tax")
 	}
 
 	var taxBands []TaxBand
@@ -23,12 +23,12 @@ func (f TaxBandFactory) CreateTaxBands(isFirstTimeBuyer bool, isAdditionalDwelli
 			BoundedTaxBand{LowerLimit: 145000, UpperLimit: 250000, Rate: 0.02},
 			BoundedTaxBand{LowerLimit: 250000, UpperLimit: 325000, Rate: 0.05},
 			BoundedTaxBand{LowerLimit: 325000, UpperLimit: 750000, Rate: 0.10},
-			UnboundedTaxBand{LowerLimit: 750001, Rate: 0.12},
+			UnboundedTaxBand{LowerLimit: 750000, Rate: 0.12},
 		}
 	}
 
 	if isAdditionalDwelling {
-		adsTax := FixedTaxBand{FixedAmount: 0.06}
+		adsTax := FixedTaxBand{FixedAmount: price * 0.06}
 		taxBands = append(taxBands, adsTax)
 	}
 
