@@ -1,23 +1,32 @@
 package main
 
 import (
+	calculator "LBTT_Calculator/calculatorTaxBands"
 	"encoding/json"
 	"log"
 	"net/http"
 )
 
 type RequestBody struct {
-	Price float64 `json:"price"`
+	Price                float64 `json:"price"`
+	IsFirstTimeBuyer     bool    `json:"isFirstTimeBuyer"`
+	IsAdditionalDwelling bool    `json:"isAdditionalDwelling"`
 }
 
 type ResponseBody struct {
 	Lbtt float64 `json:"lbtt"`
 }
 
-func calculateLBTT(price float64) float64 {
-	// Use your actual LBTT calculation logic here.
-	// For now, we'll assume a simple fixed calculation.
-	return price * 0.05 // For example, 5% of the property price
+func calculateLBTT(price float64, isFirstTimeBuyer, isAdditionalDwelling bool) float64 {
+	// Use the TaxBandFactory to create the appropriate tax bands
+	factory := calculator.TaxBandFactory{}
+	taxBands := factory.CreateTaxBands(isFirstTimeBuyer, isAdditionalDwelling, price)
+
+	// Create a new calculator with the generated tax bands
+	calc := calculator.NewCalculator(taxBands)
+
+	// Calculate the total tax
+	return calc.Calculate(price)
 }
 
 func enableCors(w http.ResponseWriter) {
@@ -46,8 +55,10 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	lbtt := calculateLBTT(reqBody.Price)
+	// Calculate the LBTT using the calculateLBTT function
+	lbtt := calculateLBTT(reqBody.Price, reqBody.IsFirstTimeBuyer, reqBody.IsAdditionalDwelling)
 
+	// Return the LBTT as a JSON response
 	resBody := ResponseBody{Lbtt: lbtt}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resBody)
