@@ -3,12 +3,12 @@
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4; 
+  background-color: #f3e5f5; 
 }
 
 .app-header {
-  background-color: #0072b1;
-  color: white;
+  background-color: #b39ddb; 
+  color: rgb(51, 4, 70);
   padding: 10px;
   text-align: center;
 }
@@ -16,7 +16,7 @@
 .app-main {
   margin: 20px 0;
   padding: 20px;
-  background-color: white; 
+  background-color: #b39ddb; 
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -28,33 +28,45 @@
 
 .calculator-form label {
   margin-bottom: 10px;
+  color: rgb(51, 4, 70); 
+}
+
+input[type="number"] {
+  padding: 8px;
+  border: 1px solid #b39ddb; 
+  border-radius: 4px;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
 }
 
 button {
   margin-top: 10px;
   padding: 10px;
-  background-color: #0072b1; 
-  color: white;
+  background-color: #673ab7; 
+  color: rgb(51, 4, 70);
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #005f8a; 
+  background-color: #673ab7; 
 }
 
 .error-message {
-  color: red;
+  color: #b71c1c; 
   margin-top: 10px;
 }
 
 .app-footer {
   text-align: center;
   padding: 10px;
-  background-color: #0072b1; 
-  color: white;
+  background-color: #b39ddb; 
+  color: rgb(51, 4, 70);
   position: relative;
   bottom: 0;
   width: 100%;
 }
+
