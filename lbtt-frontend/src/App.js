@@ -11,10 +11,10 @@ function App() {
       const response = await fetch('http://localhost:8080/calculate', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({ price: parseFloat(price) }),
-      });
+    });
       const data = await response.json();
       setLbtt(data.lbtt);
     } catch (err) {

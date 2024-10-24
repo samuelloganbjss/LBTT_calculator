@@ -20,7 +20,20 @@ func calculateLBTT(price float64) float64 {
 	return price * 0.05 // For example, 5% of the property price
 }
 
+func enableCors(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*") // Allow all origins for now
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+}
+
 func calculateHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(w) // Enable CORS for each request
+
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
@@ -41,7 +54,10 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Set up the HTTP server and routes
 	http.HandleFunc("/calculate", calculateHandler)
+
+	// Start the server on port 8080
 	log.Println("Server is running on http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
