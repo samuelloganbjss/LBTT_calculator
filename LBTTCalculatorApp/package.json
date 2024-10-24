@@ -1,1 +1,18 @@
-{"name":"LBTTCalculatorApp","version":"0.0.1","private":true,"scripts":{"start":"node node_modules/react-native/local-cli/cli.js start"},"dependencies":{"react-dom":"^18.3.1","react-native":"0.76.0","react-native-web":"^0.19.13"},"devDependencies":{"@babel/preset-react":"^7.25.9"}}
+{
+    "name": "LBTTCalculatorApp",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+      "start": "node node_modules/react-native/local-cli/cli.js start",
+      "web": "webpack serve --config webpack.config.js"
+    },
+    "dependencies": {
+      "react-dom": "^18.3.1",
+      "react-native": "0.76.0",
+      "react-native-web": "^0.19.13"
+    },
+    "devDependencies": {
+      "@babel/preset-react": "^7.25.9"
+    }
+  }
+  
