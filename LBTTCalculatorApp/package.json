@@ -4,7 +4,8 @@
     "private": true,
     "scripts": {
         "start": "node node_modules/react-native/local-cli/cli.js start",
-        "web": "webpack serve --config webpack.config.js"
+        "web": "webpack serve --config webpack.config.js",
+        "test": "jest"
     },
     "dependencies": {
         "react-dom": "^18.3.1",
