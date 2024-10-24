@@ -32,7 +32,7 @@ func enableCors(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func calculateHandler(w http.ResponseWriter, r *http.Request) {
+func calculateLBTTHandler(w http.ResponseWriter, r *http.Request) {
 	enableCors(w)
 
 	if r.Method == http.MethodOptions {
@@ -60,7 +60,7 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/calculate", calculateHandler)
+	http.HandleFunc("/calculate", calculateLBTTHandler)
 
 	log.Println("Server is running on http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

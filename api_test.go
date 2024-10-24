@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestCalculateHandler_StandardBuyer(t *testing.T) {
+func TestCalculateLBTTHandler_StandardBuyer(t *testing.T) {
 	reqBody := RequestBody{Price: 300000, IsFirstTimeBuyer: false, IsAdditionalDwelling: false}
 	body, _ := json.Marshal(reqBody)
 	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
@@ -17,7 +17,7 @@ func TestCalculateHandler_StandardBuyer(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(calculateHandler)
+	handler := http.HandlerFunc(calculateLBTTHandler)
 
 	handler.ServeHTTP(rr, req)
 
@@ -37,7 +37,7 @@ func TestCalculateHandler_StandardBuyer(t *testing.T) {
 	}
 }
 
-func TestCalculateHandler_FirstTimeBuyer(t *testing.T) {
+func TestCalculateLBTTHandler_FirstTimeBuyer(t *testing.T) {
 	reqBody := RequestBody{Price: 300000, IsFirstTimeBuyer: true, IsAdditionalDwelling: false}
 	body, _ := json.Marshal(reqBody)
 	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
@@ -46,7 +46,7 @@ func TestCalculateHandler_FirstTimeBuyer(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(calculateHandler)
+	handler := http.HandlerFunc(calculateLBTTHandler)
 
 	handler.ServeHTTP(rr, req)
 
@@ -66,7 +66,7 @@ func TestCalculateHandler_FirstTimeBuyer(t *testing.T) {
 	}
 }
 
-func TestCalculateHandler_AdditionalDwelling(t *testing.T) {
+func TestCalculateLBTTHandler_AdditionalDwelling(t *testing.T) {
 	reqBody := RequestBody{Price: 500000, IsFirstTimeBuyer: false, IsAdditionalDwelling: true}
 	body, _ := json.Marshal(reqBody)
 	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
@@ -75,7 +75,7 @@ func TestCalculateHandler_AdditionalDwelling(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(calculateHandler)
+	handler := http.HandlerFunc(calculateLBTTHandler)
 
 	handler.ServeHTTP(rr, req)
 
@@ -95,7 +95,7 @@ func TestCalculateHandler_AdditionalDwelling(t *testing.T) {
 	}
 }
 
-func TestCalculateHandler_NegativePrice(t *testing.T) {
+func TestCalculateLBTTHandler_NegativePrice(t *testing.T) {
 	reqBody := RequestBody{Price: -100000, IsFirstTimeBuyer: false, IsAdditionalDwelling: false}
 	body, _ := json.Marshal(reqBody)
 	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
@@ -104,7 +104,7 @@ func TestCalculateHandler_NegativePrice(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(calculateHandler)
+	handler := http.HandlerFunc(calculateLBTTHandler)
 
 	handler.ServeHTTP(rr, req)
 
@@ -113,7 +113,7 @@ func TestCalculateHandler_NegativePrice(t *testing.T) {
 	}
 }
 
-func TestCalculateHandler_ZeroPrice(t *testing.T) {
+func TestCalculateLBTTHandler_ZeroPrice(t *testing.T) {
 	reqBody := RequestBody{Price: 0, IsFirstTimeBuyer: false, IsAdditionalDwelling: false}
 	body, _ := json.Marshal(reqBody)
 	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
@@ -122,7 +122,7 @@ func TestCalculateHandler_ZeroPrice(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(calculateHandler)
+	handler := http.HandlerFunc(calculateLBTTHandler)
 
 	handler.ServeHTTP(rr, req)
 
