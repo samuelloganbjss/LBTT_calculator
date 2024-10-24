@@ -74,7 +74,8 @@ function App() {
         {error && <p className="error-message">{error}</p>}
       </main>
       <footer className="app-footer">
-        <p>© 2024 Your Company Name</p>
+        <p>For non-residential or mixed property transactions, please include VAT chargeable where appropriate.
+        LBTT is a self-assessed tax and therefore Revenue Scotland does not accept liability for the use by taxpayers or agents of this calculator.</p>
       </footer>
     </div>
   );
