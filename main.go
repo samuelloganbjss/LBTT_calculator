@@ -2,39 +2,46 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 )
 
-type TaxRequest struct {
-	Price                float64 `json:"price"`
-	IsFirstTimeBuyer     bool    `json:"isFirstTimeBuyer"`
-	IsAdditionalDwelling bool    `json:"isAdditionalDwelling"`
+type RequestBody struct {
+	Price float64 `json:"price"`
 }
 
-type TaxResponse struct {
+type ResponseBody struct {
 	Lbtt float64 `json:"lbtt"`
 }
 
-func calculateLBTT(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*") // Handle CORS for frontend requests
+func calculateLBTT(price float64) float64 {
+	// Use your actual LBTT calculation logic here.
+	// For now, we'll assume a simple fixed calculation.
+	return price * 0.05 // For example, 5% of the property price
+}
 
-	var req TaxRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
-		http.Error(w, "Invalid input", http.StatusBadRequest)
+func calculateHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Example calculation logic (replace with your own LBTT logic)
-	lbtt := req.Price * 0.05
+	var reqBody RequestBody
+	err := json.NewDecoder(r.Body).Decode(&reqBody)
+	if err != nil || reqBody.Price <= 0 {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
 
-	response := TaxResponse{Lbtt: lbtt}
-	json.NewEncoder(w).Encode(response)
+	lbtt := calculateLBTT(reqBody.Price)
+
+	resBody := ResponseBody{Lbtt: lbtt}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resBody)
 }
 
 func main() {
-	http.HandleFunc("/calculate", calculateLBTT)
-	fmt.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/calculate", calculateHandler)
+	log.Println("Server is running on http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
