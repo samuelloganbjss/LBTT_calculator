@@ -8,9 +8,8 @@ import (
 	"testing"
 )
 
-func TestCalculateHandler(t *testing.T) {
-	// Set up a request with a valid price
-	reqBody := RequestBody{Price: 100000}
+func TestCalculateHandler_StandardBuyer(t *testing.T) {
+	reqBody := RequestBody{Price: 300000, IsFirstTimeBuyer: false, IsAdditionalDwelling: false}
 	body, _ := json.Marshal(reqBody)
 	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
 	if err != nil {
@@ -22,29 +21,24 @@ func TestCalculateHandler(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	// Check the status code
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
 
-	// Check the response body
 	var resBody ResponseBody
 	err = json.NewDecoder(rr.Body).Decode(&resBody)
 	if err != nil {
 		t.Fatalf("Failed to decode response body: %v", err)
 	}
 
-	// Validate the LBTT value (assuming a 5% calculation in this case)
-	expectedLbtt := 5000.0
+	expectedLbtt := 4600.0
 	if resBody.Lbtt != expectedLbtt {
 		t.Errorf("handler returned unexpected LBTT: got %v want %v", resBody.Lbtt, expectedLbtt)
 	}
 }
 
-func TestInvalidPrice(t *testing.T) {
-	// Test with an invalid price (negative value)
-	reqBody := RequestBody{Price: -100000}
+func TestCalculateHandler_FirstTimeBuyer(t *testing.T) {
+	reqBody := RequestBody{Price: 300000, IsFirstTimeBuyer: true, IsAdditionalDwelling: false}
 	body, _ := json.Marshal(reqBody)
 	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
 	if err != nil {
@@ -56,9 +50,83 @@ func TestInvalidPrice(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	// Check for bad request response
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+	}
+
+	var resBody ResponseBody
+	err = json.NewDecoder(rr.Body).Decode(&resBody)
+	if err != nil {
+		t.Fatalf("Failed to decode response body: %v", err)
+	}
+
+	expectedLbtt := 4000.0
+	if resBody.Lbtt != expectedLbtt {
+		t.Errorf("handler returned unexpected LBTT: got %v want %v", resBody.Lbtt, expectedLbtt)
+	}
+}
+
+func TestCalculateHandler_AdditionalDwelling(t *testing.T) {
+	reqBody := RequestBody{Price: 500000, IsFirstTimeBuyer: false, IsAdditionalDwelling: true}
+	body, _ := json.Marshal(reqBody)
+	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(calculateHandler)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+	}
+
+	var resBody ResponseBody
+	err = json.NewDecoder(rr.Body).Decode(&resBody)
+	if err != nil {
+		t.Fatalf("Failed to decode response body: %v", err)
+	}
+
+	expectedLbtt := 53350.0
+	if resBody.Lbtt != expectedLbtt {
+		t.Errorf("handler returned unexpected LBTT: got %v want %v", resBody.Lbtt, expectedLbtt)
+	}
+}
+
+func TestCalculateHandler_NegativePrice(t *testing.T) {
+	reqBody := RequestBody{Price: -100000, IsFirstTimeBuyer: false, IsAdditionalDwelling: false}
+	body, _ := json.Marshal(reqBody)
+	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(calculateHandler)
+
+	handler.ServeHTTP(rr, req)
+
 	if status := rr.Code; status != http.StatusBadRequest {
-		t.Errorf("handler returned wrong status code for invalid price: got %v want %v",
-			status, http.StatusBadRequest)
+		t.Errorf("handler returned wrong status code for negative price: got %v want %v", status, http.StatusBadRequest)
+	}
+}
+
+func TestCalculateHandler_ZeroPrice(t *testing.T) {
+	reqBody := RequestBody{Price: 0, IsFirstTimeBuyer: false, IsAdditionalDwelling: false}
+	body, _ := json.Marshal(reqBody)
+	req, err := http.NewRequest("POST", "/calculate", bytes.NewBuffer(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(calculateHandler)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("handler returned wrong status code for zero price: got %v want %v", status, http.StatusBadRequest)
 	}
 }
