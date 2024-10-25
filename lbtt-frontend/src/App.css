@@ -1,12 +1,11 @@
 .app-container {
-  max-width: 1200px; /* Increase the container width to accommodate both the calculator and results */
+  max-width: 1200px; 
   margin: 0 auto;
   padding: 20px;
   font-family: 'Open Sans', sans-serif;
   background-color: white;
 }
 
-/* Introductory Section */
 .intro-section {
   background-color: transparent;
   padding-bottom: 2px;
@@ -36,7 +35,6 @@
   text-decoration: none;
 }
 
-/* Property Transactions Section */
 .property-transactions-section {
   margin-bottom: 20px;
 }
@@ -46,17 +44,16 @@
   font-weight: bold;
 }
 
-/* Calculator and Results Section Container */
+
 .calculator-and-results-container {
   display: flex;
   justify-content: space-between;
-  gap: 20px; /* Adjust the space between calculator and results sections */
+  gap: 20px; 
   margin-top: 20px;
 }
 
-/* Calculator Section */
 .calculator-section {
-  flex: 1; /* Make sure the calculator section takes equal space alongside the results */
+  flex: 1; 
 }
 
 .calculator-container {
@@ -138,7 +135,6 @@
   text-decoration: underline;
 }
 
-/* Results Section */
 .results-container {
   flex: 1;
   background-color: #ddf6f3; 
