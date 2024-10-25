@@ -1,5 +1,5 @@
 .app-container {
-  max-width: 800px;
+  max-width: 1200px; /* Increase the container width to accommodate both the calculator and results */
   margin: 0 auto;
   padding: 20px;
   font-family: 'Open Sans', sans-serif;
@@ -46,9 +46,17 @@
   font-weight: bold;
 }
 
+/* Calculator and Results Section Container */
+.calculator-and-results-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Adjust the space between calculator and results sections */
+  margin-top: 20px;
+}
+
 /* Calculator Section */
 .calculator-section {
-  margin-bottom: 40px;
+  flex: 1; /* Make sure the calculator section takes equal space alongside the results */
 }
 
 .calculator-container {
@@ -130,12 +138,37 @@
   text-decoration: underline;
 }
 
+.results-container {
+  flex: 1; 
+  background-color: #f0f4f8;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.results-container h3 {
+  color: #0d47a1; 
+  margin-bottom: 10px;
+}
+
+.values-entered,
+.results {
+  margin-bottom: 20px;
+}
+
+.results-container p {
+  font-size: 1rem;
+  color: rgb(51, 4, 70);
+}
+
+/* Error Message */
 .error-message {
   color: #b71c1c;
   margin-top: 10px;
   border-radius: 5px;
 }
 
+/* Footer Section */
 .app-footer {
   text-align: center;
   padding: 10px;
