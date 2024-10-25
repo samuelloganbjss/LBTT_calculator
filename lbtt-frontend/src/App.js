@@ -29,7 +29,7 @@ function App() {
 
       const data = await response.json();
       setLbtt(data.lbtt);
-      setError(null); // Clear any previous error
+      setError(null); 
     } catch (err) {
       setError('Error calculating LBTT');
       setLbtt(null);
@@ -50,27 +50,49 @@ function App() {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
-              className="purchase-price-input" // Added class for styling
-              placeholder="£0.00" // Updated placeholder for formatted look
-              min="0" // Ensuring only positive values are allowed
+              className="purchase-price-input"
+              placeholder="£0.00"
+              min="0"
             />
           </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={isFirstTimeBuyer}
-              onChange={(e) => setIsFirstTimeBuyer(e.target.checked)}
-            />
-            First-Time Buyer
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={isAdditionalDwelling}
-              onChange={(e) => setIsAdditionalDwelling(e.target.checked)}
-            />
-            Additional Dwelling
-          </label>
+          <div className="additional-dwelling-section">
+            <p>Is this purchase liable to the Additional Dwelling Supplement?</p>
+            <div className="toggle-button-group">
+              <button
+                type="button"
+                className={`toggle-button ${isAdditionalDwelling ? 'active' : ''}`}
+                onClick={() => setIsAdditionalDwelling(true)}
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                className={`toggle-button ${!isAdditionalDwelling ? 'active' : ''}`}
+                onClick={() => setIsAdditionalDwelling(false)}
+              >
+                No
+              </button>
+            </div>
+          </div>
+          <div className="first-time-buyer-section">
+            <p>Are you claiming First-Time Buyer relief?</p>
+            <div className="toggle-button-group">
+              <button
+                type="button"
+                className={`toggle-button ${isFirstTimeBuyer ? 'active' : ''}`}
+                onClick={() => setIsFirstTimeBuyer(true)}
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                className={`toggle-button ${!isFirstTimeBuyer ? 'active' : ''}`}
+                onClick={() => setIsFirstTimeBuyer(false)}
+              >
+                No
+              </button>
+            </div>
+          </div>
           <button type="submit">Calculate your tax</button>
         </form>
         {lbtt !== null && <p>LBTT: £{lbtt}</p>}

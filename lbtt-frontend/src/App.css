@@ -64,6 +64,37 @@ input[type="checkbox"] {
   border-radius: 5px; 
 }
 
+/* New CSS for the additional dwelling supplement toggle buttons */
+.additional-dwelling-section {
+  margin-bottom: 20px;
+}
+
+.toggle-button-group {
+  display: flex;
+  gap: 10px; /* Adds space between the buttons */
+}
+
+.toggle-button {
+  padding: 10px 20px;
+  border: 2px solid #8e44ad; /* Purple border color */
+  background-color: #f4f0fa; /* Light purple background */
+  color: #4a148c; /* Darker purple text color */
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 1rem;
+  flex: 1; /* Make both buttons have equal width */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.toggle-button.active {
+  background-color: #8e44ad; /* Active button with a darker purple background */
+  color: #ffffff; /* White text for better contrast on active button */
+}
+
+.toggle-button:hover {
+  background-color: #b39ddb; /* Slightly different purple for hover state */
+}
+
 button {
   margin-top: 10px;
   padding: 10px;
