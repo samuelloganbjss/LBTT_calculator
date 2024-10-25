@@ -145,24 +145,26 @@ function App() {
           </div>
         </section>
 
-        {/* Results Section */}
         {showResults && (
-          <section className="results-container">
-            <h3>Values Entered:</h3>
-            <div className="values-entered">
-              <p><strong>Purchase price:</strong> £{price}</p>
-              <p><strong>Is Additional Dwelling Supplement liable?</strong> {isAdditionalDwelling ? "Yes" : "No"}</p>
-              <p><strong>Claiming First-Time Buyer Relief:</strong> {isFirstTimeBuyer ? "Yes" : "No"}</p>
-            </div>
+  <section className="results-container">
+    <h3>Values Entered:</h3>
+    <div className="values-entered">
+      <p className="results-item"><strong>Purchase price:</strong> £{price}</p>
+      <p className="results-item"><strong>Is Additional Dwelling Supplement liable?</strong> {isAdditionalDwelling ? "Yes" : "No"}</p>
+      <p className="results-item"><strong>Claiming First-Time Buyer Relief:</strong> {isFirstTimeBuyer ? "Yes" : "No"}</p>
+    </div>
 
-            <h3>Results:</h3>
-            <div className="results">
-              {lbtt !== null && (
-                <div role="alert" aria-live="polite">
-                  <p><strong>LBTT Amount:</strong> £{lbtt}</p>
-                </div>
-              )}
-            </div>
+    <h3>Results:</h3>
+    <div className="results">
+      {lbtt !== null && (
+        <div role="alert" aria-live="polite">
+          <p className="results-item"><strong>LBTT Amount:</strong> £{lbtt}</p>
+        </div>
+      )}
+      <button className="reset-button" onClick={() => window.location.reload()}>
+        Reset calculation
+      </button>
+    </div>
           </section>
         )}
       </div>
