@@ -3,25 +3,59 @@
   margin: 0 auto;
   padding: 20px;
   font-family: 'Open Sans', sans-serif;
-  background-color: #f3e5f5; 
-  border-radius: 15px; 
+  background-color: white;
 }
 
-.app-header {
-  background-color:#f3e5f5; 
+/* Introductory Section */
+.intro-section {
+  background-color: transparent;
+  padding-bottom: 20px;
+}
+
+.intro-header {
   color: rgb(51, 4, 70);
-  padding: 10px;
-  text-align: center;
-  border-radius: 15px 15px 0 0; 
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.intro-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(51, 4, 70);
+  margin-bottom: 40px;
+}
+
+.intro-text a {
+  color: #4a148c;
+  text-decoration: underline;
+}
+
+.intro-text a:hover {
+  color: #8e44ad;
+  text-decoration: none;
+}
+
+/* Property Transactions Section */
+.property-transactions-section {
+  margin-bottom: 20px;
+}
+
+.property-transactions-section h2 {
+  color: rgb(51, 4, 70);
   font-weight: bold;
 }
 
-.app-main {
-  margin: 20px 0;
-  padding: 0; 
-  background-color: transparent; 
-  border-radius: 0; 
-  box-shadow: none; 
+/* Calculator Section */
+.calculator-section {
+  margin-bottom: 40px;
+}
+
+.calculator-container {
+  background-color: #f3e5f5;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .calculator-form {
@@ -31,39 +65,20 @@
 
 .calculator-form label {
   margin-bottom: 15px;
-  color: rgb(51, 4, 70); 
+  color: rgb(51, 4, 70);
   font-weight: bold;
 }
 
-input[type="number"] {
-  padding: 8px;
-  border: 1px solid #b39ddb; 
-  border-radius: 10px; 
-}
-
 .purchase-price-input {
-  width: 100%;
+  width: calc(100% - 20px);
   padding: 10px;
   margin-top: 5px;
   border-radius: 8px;
   border: 2px solid #8e44ad;
-  background-color: #f4f0fa; 
+  background-color: #f4f0fa;
   font-size: 1rem;
   color: #4a148c;
-
-  text-align: center; 
-  display: flex; 
-  align-items: center; 
-}
-
-.purchase-price-input::placeholder {
-  color: #8e44ad; 
-  opacity: 1; 
-}
-
-input[type="checkbox"] {
-  margin-right: 5px;
-  border-radius: 5px; 
+  text-align: center;
 }
 
 .additional-dwelling-section,
@@ -73,80 +88,59 @@ input[type="checkbox"] {
 
 .toggle-button-group {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .toggle-button {
   padding: 10px 20px;
-  border: 2px solid #8e44ad; 
-  background-color: #f4f0fa; 
-  color: #4a148c; 
+  border: 2px solid #8e44ad;
+  background-color: #f4f0fa;
+  color: #4a148c;
   cursor: pointer;
-  border-radius: 4px; 
+  border-radius: 4px;
   font-size: 1rem;
-  flex: 1; 
-  transition: background-color 0.3s ease; 
+  flex: 1;
+  transition: background-color 0.3s ease;
   font-weight: bold;
 }
 
 .toggle-button.active {
-  background-color: #8e44ad; 
-  color: #ffffff; 
+  background-color: #8e44ad;
+  color: #ffffff;
 }
 
 .toggle-button:hover {
-  background-color: #b39ddb; 
-}
-
-button {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #8e44ad; 
-  color: white;
-  border: none;
-  border-radius: 8px; 
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%; 
-}
-
-button:hover {
-  background-color: #673ab7; 
-}
-
-.error-message {
-  color: #b71c1c; 
-  margin-top: 10px;
-  border-radius: 5px; 
-}
-
-.app-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #f3e5f5; 
-  color: rgb(51, 4, 70);
-  border-radius: 0 0 15px 15px; 
-  position: relative;
-  bottom: 0;
-  width: 100%;
+  background-color: #b39ddb;
 }
 
 .calculate-button {
   margin-top: 20px;
   padding: 15px;
-  background-color: #8e44ad; 
+  background-color: #8e44ad;
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  width: 100%; 
-  text-decoration: none; 
+  width: 100%;
 }
 
 .calculate-button:hover {
-  text-decoration: underline; 
-  background-color: #8e44ad; 
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #b71c1c;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f3e5f5;
+  color: rgb(51, 4, 70);
+  border-radius: 0 0 15px 15px;
+  margin-top: 20px;
 }

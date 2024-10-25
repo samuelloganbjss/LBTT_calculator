@@ -38,72 +38,110 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="app-header">
-        <h1>Property Transactions Calculator</h1>
-      </header>
-      <main className="app-main">
-        <form onSubmit={handleSubmit} className="calculator-form">
-          <label>
-            Purchase price (£):
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-              className="purchase-price-input"
-              placeholder="£0.00"
-              min="0"
-            />
-          </label>
-          <div className="additional-dwelling-section">
-            <p>Is this purchase liable to the Additional Dwelling Supplement?</p>
-            <div className="toggle-button-group">
-              <button
-                type="button"
-                className={`toggle-button ${isAdditionalDwelling ? 'active' : ''}`}
-                onClick={() => setIsAdditionalDwelling(true)}
-              >
-                Yes
-              </button>
-              <button
-                type="button"
-                className={`toggle-button ${!isAdditionalDwelling ? 'active' : ''}`}
-                onClick={() => setIsAdditionalDwelling(false)}
-              >
-                No
-              </button>
+      {/* Introductory Section */}
+      <section className="intro-section">
+        <header className="intro-header">
+          <h1>Calculate tax</h1>
+        </header>
+        <div className="intro-text">
+          <p>
+            The tax calculator allows taxpayers and agents to work out the amount of LBTT payable
+            on residential, non-residential or mixed property transactions, and non-residential lease
+            transactions based on the rates and thresholds.
+          </p>
+          <p>
+            LBTT is a self-assessed tax and therefore Revenue Scotland does not accept liability for
+            the use by taxpayers or agents of this calculator.
+          </p>
+          <p>
+            For more information on rates and bands or how the tax works see 
+            <a href="https://revenue.scot/land-buildings-transaction-tax" target="_blank" rel="noopener noreferrer"> Land and Buildings Transaction Tax (LBTT) guidance</a>.
+          </p>
+          <p>
+            To access the calculators - please click the 
+            <a href="https://revenue.scot/calculate-property-transactions" target="_blank" rel="noopener noreferrer"> Property transactions calculator </a>
+            or <a href="https://revenue.scot/lease-transactions-calculator" target="_blank" rel="noopener noreferrer">Lease transactions calculator</a> tab below.
+          </p>
+        </div>
+      </section>
+
+      {/* Section for Subheading */}
+      <section className="property-transactions-section">
+        <h2>Calculate property transactions</h2>
+        <p>This calculator provides the LBTT liability on a property transaction based on the rates and bands in force at the effective date.</p>
+      </section>
+
+      {/* Property Transactions Calculator Section */}
+      <section className="calculator-section">
+        <div className="calculator-container">
+          <h3>Property Transactions Calculator</h3>
+          <form onSubmit={handleSubmit} className="calculator-form">
+            <label>
+              Purchase price (£):
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                className="purchase-price-input"
+                placeholder="£0.00"
+                min="0"
+              />
+            </label>
+            <div className="additional-dwelling-section">
+              <p>Is this purchase liable to the Additional Dwelling Supplement?</p>
+              <div className="toggle-button-group">
+                <button
+                  type="button"
+                  className={`toggle-button ${isAdditionalDwelling ? 'active' : ''}`}
+                  onClick={() => setIsAdditionalDwelling(true)}
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  className={`toggle-button ${!isAdditionalDwelling ? 'active' : ''}`}
+                  onClick={() => setIsAdditionalDwelling(false)}
+                >
+                  No
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="first-time-buyer-section">
-            <p>Are you claiming First-Time Buyer relief?</p>
-            <div className="toggle-button-group">
-              <button
-                type="button"
-                className={`toggle-button ${isFirstTimeBuyer ? 'active' : ''}`}
-                onClick={() => setIsFirstTimeBuyer(true)}
-              >
-                Yes
-              </button>
-              <button
-                type="button"
-                className={`toggle-button ${!isFirstTimeBuyer ? 'active' : ''}`}
-                onClick={() => setIsFirstTimeBuyer(false)}
-              >
-                No
-              </button>
+            <div className="first-time-buyer-section">
+              <p>Are you claiming First-Time Buyer relief?</p>
+              <div className="toggle-button-group">
+                <button
+                  type="button"
+                  className={`toggle-button ${isFirstTimeBuyer ? 'active' : ''}`}
+                  onClick={() => setIsFirstTimeBuyer(true)}
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  className={`toggle-button ${!isFirstTimeBuyer ? 'active' : ''}`}
+                  onClick={() => setIsFirstTimeBuyer(false)}
+                >
+                  No
+                </button>
+              </div>
             </div>
-          </div>
-          <button type="submit" className="calculate-button">Calculate your tax</button>
-        </form>
-        {lbtt !== null && <p>LBTT: £{lbtt}</p>}
-        {error && <p className="error-message">{error}</p>}
-      </main>
+            <button type="submit" className="calculate-button">Calculate your tax</button>
+          </form>
+          {lbtt !== null && <p>LBTT: £{lbtt}</p>}
+          {error && <p className="error-message">{error}</p>}
+          {/* Footer Section */}
       <footer className="app-footer">
         <p>For non-residential or mixed property transactions, please include VAT chargeable where appropriate.
         LBTT is a self-assessed tax and therefore Revenue Scotland does not accept liability for the use by taxpayers or agents of this calculator.</p>
       </footer>
+        </div>
+      </section>
+
+      
     </div>
   );
 }
 
 export default App;
+
