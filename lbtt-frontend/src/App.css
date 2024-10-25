@@ -141,7 +141,7 @@
 /* Results Section */
 .results-container {
   flex: 1;
-  background-color: #bee0dc; 
+  background-color: #ddf6f3; 
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -150,7 +150,7 @@
 }
 
 .results-container h3 {
-  color: #255850; 
+  color: #010f0d; 
   font-weight: bold;
   margin-bottom: 15px;
   text-align: left;
@@ -159,8 +159,8 @@
 
 .results-container p {
   font-size: 1rem;
-  color: #255850; 
-  background-color: rgb(215, 211, 211); 
+  color: #010f0d; 
+  background-color: rgb(228, 228, 228); 
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -170,14 +170,14 @@
 .results-container .results-item {
   font-weight: bold;
   margin-top: 10px;
-  color: #004d40; 
+  color: #010f0d; 
 }
 .reset-button {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
   background-color:  transparent; 
-  color: #255850;
+  color: #010f0d;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
