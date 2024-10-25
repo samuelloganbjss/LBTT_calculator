@@ -128,17 +128,23 @@ function App() {
             </div>
             <button type="submit" className="calculate-button">Calculate your tax</button>
           </form>
-          {lbtt !== null && <p>LBTT: £{lbtt}</p>}
-          {error && <p className="error-message">{error}</p>}
+          {lbtt !== null && (
+            <div role="alert" aria-live="polite">
+              <p>LBTT: £{lbtt}</p>
+            </div>
+          )}
+          {error && (
+            <div role="alert" aria-live="assertive">
+              <p className="error-message">{error}</p>
+            </div>
+          )}
           {/* Footer Section */}
-      <footer className="app-footer">
-        <p>For non-residential or mixed property transactions, please include VAT chargeable where appropriate.
-        LBTT is a self-assessed tax and therefore Revenue Scotland does not accept liability for the use by taxpayers or agents of this calculator.</p>
-      </footer>
+          <footer className="app-footer">
+            <p>For non-residential or mixed property transactions, please include VAT chargeable where appropriate.
+            LBTT is a self-assessed tax and therefore Revenue Scotland does not accept liability for the use by taxpayers or agents of this calculator.</p>
+          </footer>
         </div>
       </section>
-
-      
     </div>
   );
 }

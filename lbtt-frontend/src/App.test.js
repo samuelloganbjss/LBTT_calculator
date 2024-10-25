@@ -1,50 +1,80 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
 beforeEach(() => {
   jest.clearAllMocks();
+  jest.restoreAllMocks(); 
 });
 
-test('calculates LBTT from backend', async () => {
-  global.fetch = jest.fn(() =>
+test('retrieves LBTT from backend', async () => {
+  const fetchMock = jest.spyOn(global, 'fetch').mockImplementation(() =>
     Promise.resolve({
+      ok: true,
       json: () => Promise.resolve({ lbtt: 5000 }),
     })
   );
 
   render(<App />);
 
-  fireEvent.change(screen.getByLabelText(/property price/i), {
+  fireEvent.change(screen.getByLabelText(/purchase price/i), {
     target: { value: '100000' },
   });
 
-  fireEvent.click(screen.getByText(/calculate/i));
+  fireEvent.click(screen.getByText(/calculate your tax/i));
 
-  const lbttElement = await screen.findByText(/LBTT: £5000/i);
-  expect(lbttElement).toBeInTheDocument();
+  await waitFor(() => {
+    const lbttElement = screen.getByRole('alert');
+    expect(lbttElement).toHaveTextContent('LBTT: £5000');
+  });
+
+
+  expect(fetchMock).toHaveBeenCalledWith(
+    'http://localhost:8080/calculate',
+    expect.objectContaining({
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        price: 100000,
+        isFirstTimeBuyer: false,
+        isAdditionalDwelling: false,
+      }),
+    })
+  );
 });
 
 test('sends first-time buyer status to the backend', async () => {
-  global.fetch = jest.fn(() =>
+  const fetchMock = jest.spyOn(global, 'fetch').mockImplementation(() =>
     Promise.resolve({
+      ok: true,
       json: () => Promise.resolve({ lbtt: 2000 }),
     })
   );
 
   render(<App />);
 
-  fireEvent.change(screen.getByLabelText(/property price/i), {
+  fireEvent.change(screen.getByLabelText(/purchase price/i), {
     target: { value: '150000' },
   });
 
-  fireEvent.click(screen.getByLabelText(/first-time buyer/i));
+  fireEvent.click(screen.getByText(/yes/i, { selector: '.first-time-buyer-section button' }));
 
-  fireEvent.click(screen.getByText(/calculate/i));
+  fireEvent.click(screen.getByText(/calculate your tax/i));
 
-  expect(global.fetch).toHaveBeenCalledWith(
+  await waitFor(() => {
+    const lbttElement = screen.getByRole('alert');
+    expect(lbttElement).toHaveTextContent('LBTT: £2000');
+  });
+
+  expect(fetchMock).toHaveBeenCalledWith(
     'http://localhost:8080/calculate',
     expect.objectContaining({
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         price: 150000,
         isFirstTimeBuyer: true,
@@ -52,31 +82,38 @@ test('sends first-time buyer status to the backend', async () => {
       }),
     })
   );
-
-  const lbttElement = await screen.findByText(/LBTT: £2000/i);
-  expect(lbttElement).toBeInTheDocument();
 });
 
 test('sends additional dwelling status to the backend', async () => {
-  global.fetch = jest.fn(() =>
+  const fetchMock = jest.spyOn(global, 'fetch').mockImplementation(() =>
     Promise.resolve({
+      ok: true,
       json: () => Promise.resolve({ lbtt: 6000 }),
     })
   );
 
   render(<App />);
 
-  fireEvent.change(screen.getByLabelText(/property price/i), {
+  fireEvent.change(screen.getByLabelText(/purchase price/i), {
     target: { value: '300000' },
   });
 
-  fireEvent.click(screen.getByLabelText(/additional dwelling/i));
+  fireEvent.click(screen.getByText(/yes/i, { selector: '.additional-dwelling-section button' }));
 
-  fireEvent.click(screen.getByText(/calculate/i));
+  fireEvent.click(screen.getByText(/calculate your tax/i));
 
-  expect(global.fetch).toHaveBeenCalledWith(
+  await waitFor(() => {
+    const lbttElement = screen.getByRole('alert');
+    expect(lbttElement).toHaveTextContent('LBTT: £6000');
+  });
+
+  expect(fetchMock).toHaveBeenCalledWith(
     'http://localhost:8080/calculate',
     expect.objectContaining({
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         price: 300000,
         isFirstTimeBuyer: false,
@@ -84,37 +121,38 @@ test('sends additional dwelling status to the backend', async () => {
       }),
     })
   );
-
-  const lbttElement = await screen.findByText(/LBTT: £6000/i);
-  expect(lbttElement).toBeInTheDocument();
 });
 
 test('displays error message when backend returns an error', async () => {
-  global.fetch = jest.fn(() =>
+  jest.spyOn(global, 'fetch').mockImplementation(() =>
     Promise.reject(new Error('Server error'))
   );
 
   render(<App />);
 
-  fireEvent.change(screen.getByLabelText(/property price/i), {
+  fireEvent.change(screen.getByLabelText(/purchase price/i), {
     target: { value: '300000' },
   });
 
-  fireEvent.click(screen.getByText(/calculate/i));
+  fireEvent.click(screen.getByText(/calculate your tax/i));
 
-  const errorElement = await screen.findByText(/Error calculating LBTT/i);
-  expect(errorElement).toBeInTheDocument();
+  await waitFor(() => {
+    const errorElement = screen.getByRole('alert');
+    expect(errorElement).toHaveTextContent('Error calculating LBTT');
+  });
 });
 
 test('displays validation error for invalid input', async () => {
   render(<App />);
 
-  fireEvent.change(screen.getByLabelText(/property price/i), {
+  fireEvent.change(screen.getByLabelText(/purchase price/i), {
     target: { value: '-50000' },
   });
 
-  fireEvent.click(screen.getByText(/calculate/i));
+  fireEvent.click(screen.getByText(/calculate your tax/i));
 
-  const errorElement = await screen.findByText(/Error calculating LBTT/i);
-  expect(errorElement).toBeInTheDocument();
+  await waitFor(() => {
+    const errorElement = screen.getByRole('alert');
+    expect(errorElement).toHaveTextContent('Error calculating LBTT');
+  });
 });
