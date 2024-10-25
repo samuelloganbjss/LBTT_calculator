@@ -58,9 +58,8 @@ function App() {
             <a href="https://revenue.scot/land-buildings-transaction-tax" target="_blank" rel="noopener noreferrer"> Land and Buildings Transaction Tax (LBTT) guidance</a>.
           </p>
           <p>
-            To access the calculators - please click the 
-            <a href="https://revenue.scot/calculate-property-transactions" target="_blank" rel="noopener noreferrer"> Property transactions calculator </a>
-            or <a href="https://revenue.scot/lease-transactions-calculator" target="_blank" rel="noopener noreferrer">Lease transactions calculator</a> tab below.
+            To access the calculators - please use the  below
+            <a href="https://revenue.scot/calculate-tax/calculate-property-transactions" target="_blank" rel="noopener noreferrer"> Property transactions calculator  </a> below.
           </p>
         </div>
       </section>
