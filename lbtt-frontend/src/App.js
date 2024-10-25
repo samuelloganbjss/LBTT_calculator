@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './App.css'; 
-import IntroSection from './IntroSection';
-import PropertyTransactionsSection from './PropertyTransactionsSection';
-import Calculator from './Calculator';
-import Results from './Results';
+import IntroSection from './Sections/IntroSection';
+import PropertyTransactionsSection from './Sections/PropertyTransactionsSection';
+import Calculator from './Sections/Calculator';
+import Results from './Sections/Results';
 
 function App() {
   const [price, setPrice] = useState('');
