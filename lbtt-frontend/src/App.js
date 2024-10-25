@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1>LBTT Calculator</h1>
+        <h1>Property Transactions Calculator</h1>
       </header>
       <main className="app-main">
         <form onSubmit={handleSubmit} className="calculator-form">
@@ -93,7 +93,7 @@ function App() {
               </button>
             </div>
           </div>
-          <button type="submit">Calculate your tax</button>
+          <button type="submit" className="calculate-button">Calculate your tax</button>
         </form>
         {lbtt !== null && <p>LBTT: £{lbtt}</p>}
         {error && <p className="error-message">{error}</p>}
