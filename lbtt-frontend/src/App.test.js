@@ -25,7 +25,7 @@ test('retrieves LBTT from backend', async () => {
 
   await waitFor(() => {
     const lbttElement = screen.getByRole('alert');
-    expect(lbttElement).toHaveTextContent('LBTT: £5000');
+    expect(lbttElement).toHaveTextContent('LBTT Amount: £5000');
   });
 
 
@@ -65,7 +65,7 @@ test('sends first-time buyer status to the backend', async () => {
 
   await waitFor(() => {
     const lbttElement = screen.getByRole('alert');
-    expect(lbttElement).toHaveTextContent('LBTT: £2000');
+    expect(lbttElement).toHaveTextContent('LBTT Amount: £2000');
   });
 
   expect(fetchMock).toHaveBeenCalledWith(
@@ -104,7 +104,7 @@ test('sends additional dwelling status to the backend', async () => {
 
   await waitFor(() => {
     const lbttElement = screen.getByRole('alert');
-    expect(lbttElement).toHaveTextContent('LBTT: £6000');
+    expect(lbttElement).toHaveTextContent('LBTT Amount: £6000');
   });
 
   expect(fetchMock).toHaveBeenCalledWith(
