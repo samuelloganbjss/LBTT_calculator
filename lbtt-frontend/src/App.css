@@ -141,7 +141,7 @@
 /* Results Section */
 .results-container {
   flex: 1;
-  background-color: #e3f2fd; /* Light blue background */
+  background-color: #bee0dc; 
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -150,7 +150,7 @@
 }
 
 .results-container h3 {
-  color: #0d47a1; /* Dark blue color for headings */
+  color: #255850; 
   font-weight: bold;
   margin-bottom: 15px;
   text-align: left;
@@ -159,41 +159,37 @@
 
 .results-container p {
   font-size: 1rem;
-  color: #0d47a1; /* Dark blue color for text */
-  background-color: #ffffff; /* White background for each result entry */
+  color: #255850; 
+  background-color: rgb(215, 211, 211); 
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
-  border: 1px solid #b0bec5; /* Subtle border to distinguish sections */
+  border: 1px solid #b0bec5; 
 }
 
 .results-container .results-item {
   font-weight: bold;
   margin-top: 10px;
-  color: #004d40; /* Deep teal color for contrast */
+  color: #004d40; 
 }
-
 .reset-button {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #0d47a1; /* Dark blue for reset button */
-  color: #ffffff;
+  background-color:  transparent; 
+  color: #255850;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: normal; 
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-decoration: none;
+  transition: font-weight 0.3s ease; 
+  text-decoration: underline; 
 }
 
 .reset-button:hover {
-  background-color: #1565c0; /* Lighter blue shade for hover effect */
-  text-decoration: underline;
+  font-weight: bold; 
 }
-
-
 
 
 .error-message {
