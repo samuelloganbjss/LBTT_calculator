@@ -39,6 +39,26 @@ input[type="number"] {
   border-radius: 10px; 
 }
 
+.purchase-price-input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 2px solid #8e44ad;
+  background-color: #f4f0fa; 
+  font-size: 1rem;
+  color: #4a148c;
+
+  text-align: center; 
+  display: flex; 
+  align-items: center; 
+}
+
+.purchase-price-input::placeholder {
+  color: #8e44ad; 
+  opacity: 1; 
+}
+
 input[type="checkbox"] {
   margin-right: 5px;
   border-radius: 5px; 
@@ -48,7 +68,7 @@ button {
   margin-top: 10px;
   padding: 10px;
   background-color: #673ab7; 
-  color: rgb(51, 4, 70);
+  color: white;
   border: none;
   border-radius: 10px; 
   cursor: pointer;
@@ -74,4 +94,3 @@ button:hover {
   bottom: 0;
   width: 100%;
 }
-

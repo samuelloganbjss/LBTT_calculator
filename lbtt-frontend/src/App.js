@@ -44,12 +44,15 @@ function App() {
       <main className="app-main">
         <form onSubmit={handleSubmit} className="calculator-form">
           <label>
-            Property Price:
+            Purchase price (£):
             <input
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
+              className="purchase-price-input" // Added class for styling
+              placeholder="£0.00" // Updated placeholder for formatted look
+              min="0" // Ensuring only positive values are allowed
             />
           </label>
           <label>
@@ -68,7 +71,7 @@ function App() {
             />
             Additional Dwelling
           </label>
-          <button type="submit">Calculate</button>
+          <button type="submit">Calculate your tax</button>
         </form>
         {lbtt !== null && <p>LBTT: £{lbtt}</p>}
         {error && <p className="error-message">{error}</p>}
